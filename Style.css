@@ -1,0 +1,79 @@
+.carousel-item {
+  height: 70vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body {
+  background: rgb(217,225,226);
+  background: radial-gradient(circle, rgba(217,225,226,1) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);
+}
+nav {
+  background: rgb(217,225,226);
+  background: linear-gradient(93deg, rgba(217,225,226,1) 0%, rgba(173,160,144,1) 70%, rgba(125,115,90,1) 100%);
+  
+}
+.custom-logo{
+  height: 60px
+}
+
+.nav-link ul{
+  display: none;
+}
+
+.nav-link ul:hover{
+  display: block;
+}
+
+/* DropDown */
+@media (min-width: 768px) {
+  .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+/* DropDown */
