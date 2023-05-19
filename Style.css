@@ -77,3 +77,21 @@ nav {
   animation-name: slideIn;
 }
 /* DropDown */
+
+p {
+  font-size: 20px;
+}
+@media(min-width: 425px) {
+  p {
+  font-size: 25px;
+  }
+}
+html {
+  font-size: 16px;
+}
+h1 {
+  font-size: 2rem;
+}
+p {
+  font-size: 1rem;
+}
