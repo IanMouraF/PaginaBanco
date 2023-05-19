@@ -78,20 +78,13 @@ nav {
 }
 /* DropDown */
 
-p {
-  font-size: 20px;
-}
-@media(min-width: 425px) {
-  p {
-  font-size: 25px;
-  }
-}
+
 html {
-  font-size: 16px;
+  font-size: 18px;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 p {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
