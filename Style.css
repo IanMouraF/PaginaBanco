@@ -20,6 +20,19 @@ nav {
   height: 60px
 }
 
+.imagem1{
+  height: 180px;
+  float: left;
+  margin-right: 20px;
+  
+}
+.imagem2{
+  height: 180px;
+  float: right;
+  margin-left: 20px;
+  
+}
+
 .nav-link ul{
   display: none;
 }
@@ -79,12 +92,25 @@ nav {
 /* DropDown */
 
 
+
 html {
   font-size: 18px;
 }
 h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
-p {
-  font-size: 1.5rem;
+.lead {
+  font-size: 1.0rem;
 }
+a {
+  font-size: 1.1rem;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+}
+
+.align-right {
+  text-align: right;
+}
+
