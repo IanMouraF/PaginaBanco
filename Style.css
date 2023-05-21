@@ -13,7 +13,7 @@ body {
 }
 nav {
   background: rgb(217,225,226);
-  background: linear-gradient(93deg, rgba(217,225,226,1) 0%, rgba(173,160,144,1) 70%, rgba(125,115,90,1) 100%);
+  background: radial-gradient(circle, rgba(217,225,226,1) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);
   
 }
 .custom-logo{
@@ -113,4 +113,13 @@ a {
 .align-right {
   text-align: right;
 }
+
+.custom-hr {
+  margin: 20px auto; /* Define uma margem superior e inferior de 20px e centraliza horizontalmente a linha */
+  width: 80%; /* Define a largura da linha */
+  border: none; /* Remove a borda padrão */
+  border-top: 1px solid #363636; /* Adiciona uma nova borda na parte superior com a cor desejada */
+}
+
+
 
