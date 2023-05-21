@@ -1,0 +1,49 @@
+.bg-primary{
+  background: rgb(217,225,226);
+background: linear-gradient(93deg, rgba(217,225,226,1) 12%, rgba(124,98,66,1) 72%, rgba(125,115,90,1) 96%);
+}
+.custom-logo{
+  height: 60px
+}
+
+nav {
+  background: rgb(217,225,226);
+  background: linear-gradient(93deg, rgba(217,225,226,1) 0%, rgba(173,160,144,1) 70%, rgba(125,115,90,1) 100%);
+  
+}
+
+body{
+  padding-top: 110px
+}
+
+footer{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 150px;
+}
+
+html {
+  font-size: 18px;
+}
+h1 {
+  font-size: 2.5rem;
+}
+.lead {
+  font-size: 1.0rem;
+}
+a {
+  font-size: 1.1rem;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+}
+
+.align-right {
+  text-align: right;
+}
+
+
+
+

@@ -18,3 +18,17 @@ body {
   color: white !important;
   background-color: #3b5998;
 }
+
+.custom-logo{
+  height: 60px
+}
+
+nav {
+  background: rgb(217,225,226);
+  background: radial-gradient(circle, rgba(217,225,226,1) 0%, rgba(173,160,144,1) 70%, rgba(125,115,90,1) 100%);
+  
+}
+
+body{
+  padding-top: 110px
+}
