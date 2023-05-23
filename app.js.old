@@ -39,12 +39,12 @@ client.connect((err) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'register.html'));
+app.get('/home', async function (req, res) {
+  res.sendFile(path.join(__dirname, 'home.html'));
 });
 
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'home.html'));
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register.html'));
 });
 
 app.post('/register', (req, res) => {

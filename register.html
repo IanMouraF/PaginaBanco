@@ -2,37 +2,44 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=devide-width", initial-scale="1.0">
-  
+  <meta name="viewport" content="width=devide-width" , initial-scale="1.0">
 
-  
+
+
   <title>Registrar</title>
 
-  
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/a1e181d071.js" crossorigin="anonymous"></script>
-  
+  <script src = "app.js"></script>
+
   <link rel="stylesheet" href="style2.css">
 </head>
 
 
-  <body>
-      <!-- nav bar -->
+<body>
+  <!-- nav bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
       <a class="navbar-brand" href="home.html"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
               Entrar
             </a>
-            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown" data-bs-popper="none">
+            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown"
+              data-bs-popper="none">
               <a class="dropdown-item" href="login.html">Login</a>
               <a class="dropdown-item" href="register.html">Registro</a>
             </div>
@@ -44,71 +51,75 @@
             <a class="nav-link" href="#">Serviços</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
+            <a class="nav-link"
+              href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <!-- nav bar -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-10 col-xl-9 mx-auto">
-          <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
-            <div class="card-img-left d-none d-md-flex">
-              <!-- Background image for card set in CSS! -->
-            </div>
-            <div class="card-body p-4 p-sm-5">
-              <h5 class="card-title text-center mb-5 fw-light fs-5">Registre-se abaixo</h5>
-              <form id="registerForm" method="POST" action="/register">
-  
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInputUsername" name="username" placeholder="myusername" required autofocus>
-                  <label for="floatingInputUsername">Nome de Usuário</label>
-                </div>
-  
-                <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInputEmail" name="email" placeholder="name@example.com">
-                  <label for="floatingInputEmail">Endereço de e-mail</label>
-                </div>
-  
-                <hr>
-  
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-                  <label for="floatingPassword">Senha</label>
-                </div>
-  
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
-                  <label for="floatingPasswordConfirm">Confirmar Senha</label>
-                </div>
-  
-                <div class="d-grid mb-2">
-                  <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Registrar</button>
-                </div>
-                
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+          <div class="card-img-left d-none d-md-flex">
+            <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Registre-se abaixo</h5>
+            <form id="registerForm" method="POST" action="/register">
 
-                <a class="d-block text-center mt-2 small" href="login.html">Já tem uma conta? Login</a>
-  
-                <hr class="my-4">
-  
-                <div class="d-grid mb-2">
-                  <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
-                    <i class="fab fa-google me-2"></i> Entre com o Google
-                  </button>
-                </div>
-  
-                <div class="d-grid">
-                  <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
-                    <i class="fab fa-facebook-f me-2"></i> Entre com o Facebook
-                  </button>
-                </div>
-  
-              </form>
-            </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInputUsername" name="username"
+                  placeholder="myusername" required autofocus>
+                <label for="floatingInputUsername">Nome de Usuário</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInputEmail" name="email"
+                  placeholder="name@example.com">
+                <label for="floatingInputEmail">Endereço de e-mail</label>
+              </div>
+
+              <hr>
+
+              <div class="form-floating m b-3">
+                <input type="password" class="form-control" id="floatingPassword" name="password"
+                  placeholder="Password">
+                <label for="floatingPassword">Senha</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
+                <label for="floatingPasswordConfirm">Confirmar Senha</label>
+              </div>
+
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit"
+                  href="login.html">Registrar</button>
+              </div>
+
+              <a class="d-block text-center mt-2 small" href="login.html">Já tem uma conta? Login</a>
+
+              <hr class="my-4">
+
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
+                  <i class="fab fa-google me-2"></i> Entre com o Google
+                </button>
+              </div>
+
+              <div class="d-grid">
+                <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
+                  <i class="fab fa-facebook-f me-2"></i> Entre com o Facebook
+                </button>
+              </div>
+
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
