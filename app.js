@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const path = require('path');
+const { MongoClient } = require('mongodb');
 
 app.use(express.static(__dirname));
 
@@ -10,31 +11,8 @@ app.get('/style2.css', (req, res) => {
   res.sendFile(path.join(__dirname, 'style2.css'));
 });
 
-const { MongoClient } = require('mongodb');
 const url = 'mongodb+srv://ianAtlas:fabiola356@cluster0.risdfp2.mongodb.net/';
 const dbName = 'cluster0';
-const client = new MongoClient(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-client.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar-se ao MongoDB:', err);
-    return;
-  }
-
-  console.log('Conexão bem-sucedida ao MongoDB');
-  const db = client.db(dbName);
-
-  db.createCollection('users', (err, result) => {
-    if (err) {
-      console.error('Erro ao criar a coleção:', err);
-    } else {
-      console.log('Coleção "users" criada com sucesso');
-    }
-  });
-});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -47,7 +25,7 @@ app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, 'home.html'));
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -58,18 +36,24 @@ app.post('/register', (req, res) => {
     password
   };
 
-  const db = client.db(dbName);
-  const usersCollection = db.collection('users');
+  try {
+    const client = await MongoClient.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
 
-  usersCollection.insertOne(user, (err, result) => {
-    if (err) {
-      console.error('Erro ao salvar usuário:', err);
-      res.status(500).send('Erro ao salvar usuário');
-    } else {
-      console.log('Usuário salvo com sucesso:', result.ops[0]);
-      res.redirect('/home.html');
-    }
-  });
+    const db = client.db(dbName);
+    const usersCollection = db.collection('users');
+
+    const result = await usersCollection.insertOne(user);
+    console.log('Usuário salvo com sucesso:', result.ops[0]);
+    res.redirect('/home');
+
+    client.close();
+  } catch (err) {
+    console.error('Erro ao salvar usuário:', err);
+    res.status(500).send('Erro ao salvar usuário');
+  }
 });
 
 app.listen(port, () => {
