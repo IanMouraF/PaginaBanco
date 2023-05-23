@@ -45,8 +45,8 @@ app.post('/register', async (req, res) => {
     const db = client.db(dbName);
     const usersCollection = db.collection('users');
 
-    const result = await usersCollection.insertOne(user);
-    console.log('Usuário salvo com sucesso:', result.ops[0]);
+    await usersCollection.insertOne(user);
+    console.log('Usuário salvo com sucesso:', user);
     res.redirect('/home');
 
     client.close();
