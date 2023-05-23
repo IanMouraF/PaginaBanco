@@ -43,6 +43,10 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'register.html'));
 });
 
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, 'home.html'));
+});
+
 app.post('/register', (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
