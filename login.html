@@ -57,14 +57,16 @@
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <h5 class="card-title text-center mb-5 fw-light fs-5">Entrar</h5>
-              <form>
+              <form action="/login" method="POST">
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                   <label for="floatingInput">Endereço de e-mail</label>
+                  <span id="emailError" class="error"></span>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                   <label for="floatingPassword">Senha</label>
+                  <span id="passwordError" class="error"></span>
                 </div>
 
                 <div class="form-check mb-3">
@@ -91,6 +93,31 @@
                   </button>
                 </div>
               </form>
+              <script>
+                document.querySelector('form').addEventListener('submit', function (event) {
+                  var emailInput = document.querySelector('#floatingInput');
+                  var passwordInput = document.querySelector('#floatingPassword');
+                  var emailError = document.querySelector('#emailError');
+                  var passwordError = document.querySelector('#passwordError');
+              
+                  // Verificar se o campo de e-mail está vazio ou não está no formato correto
+                  if (emailInput.value === '' || !emailInput.validity.valid) {
+                    emailError.textContent = 'Por favor, insira um endereço de e-mail válido.';
+                    event.preventDefault(); // Impede o envio do formulário
+                  } else {
+                    emailError.textContent = ''; // Limpa a mensagem de erro
+                  }
+              
+                  // Verificar se o campo de senha está vazio
+                  if (passwordInput.value === '') {
+                    passwordError.textContent = 'Por favor, insira sua senha.';
+                    event.preventDefault(); // Impede o envio do formulário
+                  } else {
+                    passwordError.textContent = ''; // Limpa a mensagem de erro
+                  }
+                });
+              </script>
+              
             </div>
           </div>
         </div>
