@@ -1,30 +1,30 @@
-.fixed-top, .sb-nav-fixed #layoutSidenav #layoutSidenav_nav, .sb-nav-fixed .sb-topnav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
+body {
+    background: radial-gradient(
+        circle, 
+        rgba(217,225,226,1) 12%, 
+        rgba(173,160,144,1) 72%, 
+        rgba(125,115,90,1) 96%);
 }
 
-.sb-nav-fixed .sb-topnav {
-    z-index: 1039;
+nav {
+    background: rgb(217,225,226);
+    background: radial-gradient(
+    circle, 
+    rgba(217,225,226,1) 12%, 
+    rgba(173,160,144,1) 72%, 
+    rgba(125,115,90,1) 96%);
 }
 
-.sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-    width: 225px;
-    height: 100vh;
-    z-index: 1038;
+.custom-logo {
+    height: 60px
 }
 
-.sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
-    padding-top: 56px;
+.table-div {
+    margin-top: 90px;
+    margin-left: 30%;
+    width: 600px;
 }
 
-.sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav .sb-sidenav-menu {
-    overflow-y: auto;
-}
-
-.sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-    padding-left: 225px;
-    top: 56px;
+.table-div > h3 {
+    text-align: center;
 }
