@@ -2,9 +2,65 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const path = require('path');
-const { MongoClient } = require('mongodb');
+const {
+  MongoClient,
+  ObjectId
+} = require('mongodb');
 const jwt = require('jsonwebtoken');
-const { ObjectId } = require('mongodb');
+const url = 'mongodb+srv://ianAtlas:fabiola356@cluster0.risdfp2.mongodb.net/';
+const dbName = 'cluster0';
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./scratch');
+
+let usersCollection;
+
+// Função para conectar ao MongoDB
+async function connectToDatabase() {
+  const client = await MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+
+  const db = client.db(dbName);
+  usersCollection = db.collection('users');
+
+  return client;
+}
+
+// Conectar ao banco de dados
+connectToDatabase()
+  .then(client => {
+    console.log('Conexão com o MongoDB estabelecida');
+    // Inicie o servidor apenas após a conexão com o banco de dados ser estabelecida
+    app.listen(port, () => {
+      console.log(`Servidor rodando em http://localhost:${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('Erro ao conectar ao MongoDB:', err);
+  });
+
+function checkDatabaseConnection(req, res, next) {
+  if (!usersCollection) {
+    return res.status(500).send('Conexão com o banco de dados não estabelecida.');
+  }
+  next();
+}
+
+// Função para obter a conexão com o banco de dados
+async function getDatabaseConnection() {
+  if (!usersCollection) {
+    const client = await MongoClient.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+
+    const db = client.db(dbName);
+    usersCollection = db.collection('users');
+  }
+
+  return usersCollection;
+}
 
 app.use(express.static(__dirname));
 
@@ -13,10 +69,9 @@ app.get('/style2.css', (req, res) => {
   res.sendFile(path.join(__dirname, 'style2.css'));
 });
 
-const url = 'mongodb+srv://ianAtlas:fabiola356@cluster0.risdfp2.mongodb.net/';
-const dbName = 'cluster0';
-
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.json());
 
 app.get('/home', async function (req, res) {
@@ -35,7 +90,9 @@ function generateToken(user) {
   };
 
   // Gera o token com uma chave secreta e um tempo de expiração (opcional)
-  const token = jwt.sign(payload, '1237689', { expiresIn: '1h' });
+  const token = jwt.sign(payload, '1237689', {
+    expiresIn: '1h'
+  });
 
   return token;
 }
@@ -58,47 +115,119 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// ...
-
 app.post('/login', async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
   try {
-    const client = await MongoClient.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+    const user = await usersCollection.findOne({
+      email,
+      password
     });
-
-    const db = client.db(dbName);
-    const usersCollection = db.collection('users');
-
-    const user = await usersCollection.findOne({ email, password });
 
     if (user) {
       console.log('Login bem-sucedido:', user);
       const token = generateToken(user); // Gera o token de autenticação
-      await usersCollection.updateOne({ _id: user._id }, { $set: { token } }); // Armazena o token no banco de dados
-      res.redirect('/home');
+      await usersCollection.updateOne({
+        _id: user._id
+      }, {
+        $set: {
+          token
+        }
+      }); // Armazena o token no banco de dados
+      const redirectUrl = '/home.html';
+
+      res.send(`
+        <script>
+          localStorage.setItem('token', '${token}');
+          window.location.href = '${redirectUrl}';
+        </script>
+      `); // Redireciona para home.html com o token e o nome de usuário
 
     } else {
       console.log('Credenciais inválidas');
       res.status(401).send('Credenciais inválidas');
     }
-
-    client.close();
   } catch (err) {
     console.error('Erro ao realizar login:', err);
     res.status(500).send('Erro ao realizar login');
   }
 });
 
+app.post('/getUserInfo', checkDatabaseConnection, async (req, res) => {
+  const {
+    token
+  } = req.body;
 
+  try {
+    const decoded = jwt.verify(token, '1237689');
+
+    const user = await usersCollection.findOne({
+      _id: ObjectId(decoded.userId)
+    });
+
+    if (user) {
+      console.log('Usuário autenticado:', user);
+      res.json({
+        username: user.username
+      });
+    } else {
+      console.log('Usuário não encontrado');
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao verificar token:', err);
+    res.status(401).send('Token inválido');
+  }
+});
 
 // Rota protegida que requer autenticação
-app.get('/protected', authenticateToken, (req, res) => {
-  res.send('Informações confidenciais acessadas com sucesso!' +
-    `<script>document.getElementById("username").textContent = "${req.user.username}";</script>`);
+app.get('/protected', checkDatabaseConnection, authenticateToken, async (req, res) => {
+  try {
+    const user = await usersCollection.findOne({
+      _id: ObjectId(req.user.userId)
+    });
+
+    if (user) {
+      console.log('Usuário autenticado:', user);
+      // Atualizar os elementos relevantes na página com as informações do usuário
+      res.send(`<script>document.getElementById("username").textContent = "${user.username}";</script>`);
+
+    } else {
+      console.log('Usuário não encontrado');
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao buscar usuário:', err);
+    res.status(500).send('Erro ao buscar usuário');
+  }
+});
+
+app.post('/logout', checkDatabaseConnection, async (req, res) => {
+  const {
+    token
+  } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, '1237689');
+
+    // Atualize o documento do usuário no MongoDB removendo o token
+    await usersCollection.updateOne({
+      _id: ObjectId(decoded.userId)
+    }, {
+      $unset: {
+        token: ''
+      }
+    });
+
+    // Limpar as informações de sessão no lado do cliente
+    localStorage.removeItem('token');
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Erro ao efetuar logout:', err);
+    res.sendStatus(500);
+  }
 });
 
 
@@ -108,15 +237,9 @@ app.post('/register', async (req, res) => {
   const password = req.body.password;
 
   try {
-    const client = await MongoClient.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+    const user = await usersCollection.findOne({
+      email
     });
-
-    const db = client.db(dbName);
-    const usersCollection = db.collection('users');
-
-    const user = await usersCollection.findOne({ email });
 
     if (user) {
       console.log('O usuário já está registrado:', user);
@@ -140,16 +263,8 @@ app.post('/register', async (req, res) => {
         res.status(500).send('Erro ao registrar usuário');
       }
     }
-
-    client.close();
   } catch (err) {
     console.error('Erro ao registrar usuário:', err);
     res.status(500).send('Erro ao registrar usuário');
   }
-});
-
-// ...
-
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
 });

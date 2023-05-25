@@ -17,6 +17,93 @@
   <link rel="stylesheet" href="Style.css">
 </head>
 
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const response = await fetch('/getUserInfo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Primeiro response ok');
+
+          const userInfo = await response.json();
+          const usernameT = userInfo.username
+          const formattedUsername = usernameT.charAt(0).toUpperCase() + usernameT.slice(1).toLowerCase();
+          document.getElementById('LoginLink').textContent = formattedUsername;
+          document.getElementById('login').textContent = 'Administração'
+          document.getElementById('login').addEventListener('click', function () {
+            // Redirecionar para a página "Administração.html"
+            window.location.href = 'gestao.html';
+          });
+          document.getElementById('registro').textContent = 'Sair'
+          document.getElementById('registro').addEventListener('click', async function (event) {
+            console.log('Evento de clique acionado');
+            // Remover o token do documento do usuário no MongoDB
+            const response = await fetch('/logout', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                token
+              }),
+            });
+
+            if (response.ok) {
+              console.log('Segundo response ok');
+
+              // Redirecionar para a página de login (ou outra página desejada)
+
+              // Remover as informações de usuário do armazenamento local
+              localStorage.removeItem('token');
+              event.preventDefault();
+              document.getElementById('LoginLink').textContent = 'Entrar';
+              document.getElementById('login').textContent = 'Login';
+              document.getElementById('registro').textContent = 'Registro';
+
+              window.location.href = 'home.html';
+            } else {
+              console.error('Erro ao efetuar logout:', response.status);
+            }
+          });
+
+          // Verificar novamente se as informações de usuário ainda estão presentes antes de atualizar a página
+          window.addEventListener('beforeunload', function () {
+            const token = localStorage.getItem('token');
+            if (!token) {
+              document.getElementById('LoginLink').textContent = 'Entrar';
+              document.getElementById('login').textContent = 'Login';
+              document.getElementById('registro').href = 'gestao.html'
+              document.getElementById('registro').textContent = 'Registro';
+              document.getElementById('registro').href = 'home.html'
+            }
+          });
+
+        } else {
+          console.error('Erro ao obter informações do usuário:', response.status);
+        }
+      } catch (error) {
+        console.error('Erro ao obter informações do usuário:', error);
+      }
+    } else {
+      document.getElementById('login').href = 'login.html'
+      document.getElementById('registro').href = 'register.html'
+    }
+  });
+</script>
+
+
+
 <!-- Barra de Navegação -->
 
 <body>
@@ -32,20 +119,17 @@
           <li class="nav-item dropdown">
             <a id="LoginLink" class="nav-link dropdown-toggle login-link" href="#" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Entrar <span id="username"></span>
+              Entrar <span id="username-placeholder"></span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown"
               data-bs-popper="none">
-              <a class="dropdown-item" href="login.html">Login</a>
-              <a class="dropdown-item" href="register.html">Registro</a>
+              <a id="login" class="dropdown-item" href="#">Login</a>
+              <a id="registro" class="dropdown-item" href="#">Registro</a>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="sobre.html">Sobre</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"
@@ -58,43 +142,18 @@
   <!-- Barra de Navegação -->
 
 
-  <script>
-    // Obtém o nome de usuário do armazenamento local ou define como vazio se não estiver definido
-    var username = localStorage.getItem("username") || "";
+  <!--   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const username = urlParams.get('username');
+      const usernamePlaceholder = document.getElementById('LoginLink');
 
-    // Seleciona o elemento "Entrar" na barra de navegação
-    var loginLinkElement = document.getElementById("LoginLink");
-
-    // Verifica se o nome de usuário está definido
-    if (username) {
-      // Atualiza o texto do elemento "Entrar" com o nome de usuário
-      loginLinkElement.textContent = username;
-    }
-
-    // Fazer uma requisição GET para verificar o token
-    fetch('/protected', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Enviar o token armazenado no localStorage
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Verificar a resposta do servidor
-        if (data.valid) {
-          // O token é válido, exibir as informações para o usuário logado
-          // Por exemplo, exibir o nome de usuário ou outras informações relevantes
-          document.getElementById('username').innerText = data.username;
-        } else {
-          // O token é inválido ou expirou, redirecionar o usuário para fazer login novamente
-          window.location.href = '/login';
-        }
-      })
-      .catch(error => {
-        console.error('Erro ao verificar o token:', error);
-      });
-  </script>
+      if (username) {
+        const formattedUsername = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+        usernamePlaceholder.innerText = formattedUsername;
+      }
+    });
+  </script> -->
 
 
   <!-- Carrossel -->
@@ -220,19 +279,7 @@
 
   <!-- Page Content -->
 
-  <script>
-    // Obtém o nome de usuário do armazenamento local ou define como vazio se não estiver definido
-    var username = localStorage.getItem("username") || "";
 
-    // Seleciona o elemento "Entrar" na barra de navegação
-    var loginLinkElement = document.getElementById("LoginLink");
-
-    // Verifica se o nome de usuário está definido
-    if (username) {
-      // Atualiza o texto do elemento "Entrar" com o nome de usuário
-      loginLinkElement.textContent = "Olá, " + username;
-    }
-  </script>
 
 
 </body>
