@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Gestão Administrativa</title>
 
-    <link href="style5.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<head>
+  <title>Gestão Administrativa</title>
+
+  <link href="style5.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  </script>
 </head>
 
 <script>
@@ -93,6 +97,138 @@
   });
 </script>
 
+<!-- ... código HTML anterior ... -->
+
+<script>
+  // ...
+
+  // Função para excluir um usuário
+  async function deleteUser(userId) {
+    try {
+      const response = await fetch(`/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        console.log('Usuário excluído com sucesso');
+        // Recarregue a página para atualizar a tabela de usuários
+        window.location.reload();
+      } else {
+        console.error('Erro ao excluir usuário:', response.status);
+      }
+    } catch (error) {
+      console.error('Erro ao excluir usuário:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const response = await fetch('/users', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const users = await response.json();
+
+        // Obtenha a referência da tabela
+        const table = document.getElementById('user-table');
+
+        // Preencha os dados dos usuários na tabela
+        users.forEach((user, index) => {
+          const row = table.insertRow(index + 1); // +1 para evitar a linha do cabeçalho
+
+          // Preencha as células com os dados do usuário
+          const idCell = row.insertCell(0);
+          const nameCell = row.insertCell(1);
+          const emailCell = row.insertCell(2);
+          const actionCell = row.insertCell(3);
+
+          idCell.textContent = index + 1;
+          nameCell.textContent = user.username;
+          emailCell.textContent = user.email;
+          actionCell.innerHTML =
+            `<button id="edit-button" onclick="showEditUserModal('USER_ID')">editar</button><button onclick="deleteUser('${user._id}')">excluir</button>`;
+        });
+      } else {
+        console.error('Erro ao obter usuários:', response.status);
+      }
+    } catch (error) {
+      console.error('Erro ao obter usuários:', error);
+    }
+  });
+
+  //onclick="editUser('${user._id}')"
+
+  // Função para editar um usuário
+  async function editUser(userId) {
+    const usernameInput = document.getElementById('usernameInput').value;
+    const emailInput = document.getElementById('emailInput').value;
+
+    try {
+      const response = await fetch(`/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+
+          username: usernameInput,
+          email: emailInput,
+        }),
+      });
+
+      if (response.ok) {
+
+        console.log('Usuário editado com sucesso');
+        // Recarregue a página ou atualize a tabela de usuários para refletir as alterações
+        // window.location.reload();
+      } else {
+        console.error('Erro ao editar usuário:', response.status);
+      }
+    } catch (error) {
+      console.error('Erro ao editar usuário:', error);
+    }
+  }
+
+  function showEditUserModal(userId) {
+    const modal = document.getElementById('editUserModal');
+    const form = document.getElementById('editUserForm');
+
+    // Reset the form
+    form.reset();
+
+    // Set the form action URL
+    form.action = `/users/${userId}`;
+
+    // Get the user information
+    fetch(`/users/${userId}`)
+      .then(response => response.json())
+      .then(user => {
+        console.log('User:', user);
+        // Set the input values with the user information
+        form.username.value = user.username;
+        form.email.value = user.email;
+        form.password.value = user.password;
+
+        // Show the modal
+        modal.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error fetching user information:', error);
+        alert('Error fetching user information');
+      });
+  }
+</script>
+
+<!-- ... código HTML posterior ... -->
+
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
@@ -126,38 +262,51 @@
       </div>
     </div>
   </nav>
-    <div class="table-div">
-        <h3>Tabela de Usuários</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Ian Ianiano</td>
-                    <td>ian@ianiano.com</td>
-                    <td><button>editar</butto><button>excluir</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Rafael Rafaelson</td>
-                    <td>rafael@rafaelson.com</td>
-                    <td><button>editar</butto><button>excluir</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Samuel Sam</td>
-                    <td>samuel@sam.com</td>
-                    <td><button>editar</butto><button>excluir</button></td>
-                </tr>
-            </tbody>
-        </table>
+
+  <!-- Modal de edição de usuário -->
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Editar Usuário</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editUserForm">
+            <div class="mb-3">
+              <label for="usernameInput" class="form-label">Nome de Usuário:</label>
+              <input type="text" class="form-control" id="usernameInput" placeholder="Nome de Usuário">
+            </div>
+            <div class="mb-3">
+              <label for="emailInput" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="emailInput" placeholder="Email">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="saveChangesBtn">Salvar Alterações</button>
+        </div>
+      </div>
     </div>
+  </div>
+  <!-- Modal -->
+
+  <div class="table-div">
+    <h3>Tabela de Usuários</h3>
+    <table id="user-table" class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">E-mail</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </body>
+
 </html>

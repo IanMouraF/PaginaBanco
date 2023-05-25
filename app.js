@@ -115,6 +115,24 @@ function authenticateToken(req, res, next) {
   });
 }
 
+app.get('/users', checkDatabaseConnection, async (req, res) => {
+  try {
+    const users = await usersCollection.find().toArray();
+
+    if (users.length > 0) {
+      console.log('Usuários encontrados:', users);
+      res.json(users);
+    } else {
+      console.log('Nenhum usuário encontrado');
+      res.status(404).send('Nenhum usuário encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao buscar usuários:', err);
+    res.status(500).send('Erro ao buscar usuários');
+  }
+});
+
+
 app.post('/login', async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -230,6 +248,26 @@ app.post('/logout', checkDatabaseConnection, async (req, res) => {
   }
 });
 
+app.get('/users/:id', checkDatabaseConnection, async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await usersCollection.findOne({ _id: ObjectId(userId) });
+
+    if (user) {
+      console.log('Usuário encontrado:', user);
+      res.json(user);
+    } else {
+      console.log('Usuário não encontrado');
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao buscar usuário:', err);
+    res.status(500).send('Erro ao buscar usuário');
+  }
+});
+
+
 
 app.post('/register', async (req, res) => {
   const username = req.body.username;
@@ -268,3 +306,79 @@ app.post('/register', async (req, res) => {
     res.status(500).send('Erro ao registrar usuário');
   }
 });
+
+app.delete('/users/:id', checkDatabaseConnection, async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const result = await usersCollection.deleteOne({ _id: ObjectId(userId) });
+
+    if (result.deletedCount > 0) {
+      console.log('Usuário excluído com sucesso');
+      res.sendStatus(200);
+    } else {
+      console.log('Usuário não encontrado');
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao excluir usuário:', err);
+    res.status(500).send('Erro ao excluir usuário');
+  }
+});
+
+app.put('/users/:id', checkDatabaseConnection, async (req, res) => {
+  const userId = req.params.id;
+  const { username, email, password } = req.body;
+
+  try {
+    const result = await usersCollection.updateOne(
+      { _id: ObjectId(userId) },
+      { $set: { username, email, password } }
+    );
+
+    if (result.modifiedCount > 0) {
+      console.log('Usuário atualizado com sucesso');
+      res.sendStatus(200);
+    } else {
+      console.log('Usuário não encontrado');
+      res.status(404).send('Usuário não encontrado');
+    }
+  } catch (err) {
+    console.error('Erro ao atualizar usuário:', err);
+    res.status(500).send('Erro ao atualizar usuário');
+  }
+});
+
+function showEditUserModal(userId) {
+  if (typeof userId !== 'string' || !/^[0-9a-fA-F]{24}$/.test(userId)) {
+    console.error('Invalid userId:', userId);
+    alert('Invalid userId');
+    return;
+  }
+
+  const modal = document.getElementById('editUserModal');
+  const form = document.getElementById('editUserForm');
+
+  // Reset the form
+  form.reset();
+
+  // Set the form action URL
+  form.action = `/users/${userId}`;
+
+  // Get the user information
+  fetch(`/users/${userId}`)
+    .then(response => response.json())
+    .then(user => {
+      // Set the input values with the user information
+      form.username.value = user.username;
+      form.email.value = user.email;
+      form.password.value = user.password;
+
+      // Show the modal
+      modal.style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching user information:', error);
+      alert('Error fetching user information');
+    });
+}
