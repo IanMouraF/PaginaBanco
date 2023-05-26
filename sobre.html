@@ -38,7 +38,7 @@
           document.getElementById('login').textContent = 'Administração'
           document.getElementById('login').addEventListener('click', function () {
             // Redirecionar para a página "Administração.html"
-            window.location.href = 'gestao.html';
+            window.location.href = '/gestao';
           });
           document.getElementById('registro').textContent = 'Sair'
           document.getElementById('registro').addEventListener('click', async function (event) {
@@ -66,7 +66,7 @@
               document.getElementById('login').textContent = 'Login';
               document.getElementById('registro').textContent = 'Registro';
 
-              window.location.href = 'home.html';
+              window.location.href = '/home';
             } else {
               console.error('Erro ao efetuar logout:', response.status);
             }
@@ -78,9 +78,9 @@
             if (!token) {
               document.getElementById('LoginLink').textContent = 'Entrar';
               document.getElementById('login').textContent = 'Login';
-              document.getElementById('registro').href = 'gestao.html'
+              document.getElementById('registro').href = '/gestao'
               document.getElementById('registro').textContent = 'Registro';
-              document.getElementById('registro').href = 'home.html'
+              document.getElementById('registro').href = '/home'
             }
           });
 
@@ -91,8 +91,8 @@
         console.error('Erro ao obter informações do usuário:', error);
       }
     } else {
-      document.getElementById('login').href = 'login.html'
-      document.getElementById('registro').href = 'register.html'
+      document.getElementById('login').href = '/login'
+      document.getElementById('registro').href = '/register'
     }
   });
 </script>
@@ -103,7 +103,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="home.html"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
+      <a class="navbar-brand" href="/home"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -123,7 +123,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sobre.html">Sobre</a>
+            <a class="nav-link" href="/sobre">Sobre</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"
