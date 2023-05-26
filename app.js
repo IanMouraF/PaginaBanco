@@ -90,6 +90,10 @@ app.get('/sobre', (req, res) => {
   res.sendFile(path.join(__dirname, 'sobre.html'));
 });
 
+app.get('/gestao', (req, res) => {
+  res.sendFile(path.join(__dirname, 'gestao.html'));
+});
+
 // Função para gerar o token de autenticação
 function generateToken(user) {
   // Define as informações que você deseja incluir no token (por exemplo, o ID do usuário)
