@@ -160,7 +160,7 @@ app.post('/login', async (req, res) => {
           token
         }
       }); // Armazena o token no banco de dados
-      const redirectUrl = '/home.html';
+      const redirectUrl = '/home';
 
       res.send(`
         <script>
@@ -301,7 +301,7 @@ app.post('/register', async (req, res) => {
 
       if (result.insertedId) {
         console.log('Registro bem-sucedido:', newUser);
-        res.redirect('/login.html');
+        res.redirect('/login');
 
       } else {
         console.log('Erro ao registrar usuário');
