@@ -12,7 +12,7 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-  </script>
+    </script>
 
   <link rel="stylesheet" href="Style.css">
 </head>
@@ -42,13 +42,11 @@
           document.getElementById('LoginLink').textContent = formattedUsername;
           document.getElementById('login').textContent = 'Administração'
           document.getElementById('login').addEventListener('click', function () {
-            // Redirecionar para a página "Administração.html"
-            window.location.href = 'gestao.html';
+            window.location.href = '/gestao';
           });
           document.getElementById('registro').textContent = 'Sair'
           document.getElementById('registro').addEventListener('click', async function (event) {
             console.log('Evento de clique acionado');
-            // Remover o token do documento do usuário no MongoDB
             const response = await fetch('/logout', {
               method: 'POST',
               headers: {
@@ -61,17 +59,13 @@
 
             if (response.ok) {
               console.log('Segundo response ok');
-
-              // Redirecionar para a página de login (ou outra página desejada)
-
-              // Remover as informações de usuário do armazenamento local
               localStorage.removeItem('token');
               event.preventDefault();
               document.getElementById('LoginLink').textContent = 'Entrar';
               document.getElementById('login').textContent = 'Login';
               document.getElementById('registro').textContent = 'Registro';
 
-              window.location.href = 'home.html';
+              window.location.href = '/home';
             } else {
               console.error('Erro ao efetuar logout:', response.status);
             }
@@ -83,9 +77,9 @@
             if (!token) {
               document.getElementById('LoginLink').textContent = 'Entrar';
               document.getElementById('login').textContent = 'Login';
-              document.getElementById('registro').href = 'gestao.html'
+              document.getElementById('registro').href = '/register'
               document.getElementById('registro').textContent = 'Registro';
-              document.getElementById('registro').href = 'home.html'
+              document.getElementById('registro').href = '/home'
             }
           });
 
@@ -96,20 +90,18 @@
         console.error('Erro ao obter informações do usuário:', error);
       }
     } else {
-      document.getElementById('login').href = 'login.html'
-      document.getElementById('registro').href = 'register.html'
+      document.getElementById('login').href = '/login'
+      document.getElementById('registro').href = '/register'
     }
   });
 </script>
-
-
 
 <!-- Barra de Navegação -->
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="home.html"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
+      <a class="navbar-brand" href="/home"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -129,7 +121,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sobre.html">Sobre</a>
+            <a class="nav-link" href="/sobre">Sobre</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"
