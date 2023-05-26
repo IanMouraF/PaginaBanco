@@ -82,6 +82,14 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'register.html'));
 });
 
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+app.get('/sobre', (req, res) => {
+  res.sendFile(path.join(__dirname, 'sobre.html'));
+});
+
 // Função para gerar o token de autenticação
 function generateToken(user) {
   // Define as informações que você deseja incluir no token (por exemplo, o ID do usuário)
@@ -131,7 +139,6 @@ app.get('/users', checkDatabaseConnection, async (req, res) => {
     res.status(500).send('Erro ao buscar usuários');
   }
 });
-
 
 app.post('/login', async (req, res) => {
   const email = req.body.email;
