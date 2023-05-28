@@ -1,0 +1,114 @@
+body {
+  background: radial-gradient(
+      circle, 
+      rgba(217,225,226,1) 12%, 
+      rgba(173,160,144,1) 72%, 
+      rgba(125,115,90,1) 96%);
+}
+
+nav {
+  background: rgb(217,225,226);
+  background: radial-gradient(circle, rgba(217,225,226,1) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);
+  
+}
+.custom-logo{
+  height: 60px
+}
+
+.table-div {
+  margin-top: 90px;
+  margin-left: 30%;
+  width: 600px;
+}
+
+.table-div > h3 {
+  text-align: center;
+}
+
+.nav-link ul{
+  display: none;
+}
+
+.nav-link ul:hover{
+  display: block;
+}
+
+/* DropDown */
+@media (min-width: 768px) {
+  .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+/* DropDown */
+
+
+
+html {
+  font-size: 18px;
+}
+h1 {
+  font-size: 2.5rem;
+}
+.lead {
+  font-size: 1.0rem;
+}
+a {
+  font-size: 1.1rem;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.custom-hr {
+  margin: 20px auto; /* Define uma margem superior e inferior de 20px e centraliza horizontalmente a linha */
+  width: 80%; /* Define a largura da linha */
+  border: none; /* Remove a borda padrão */
+  border-top: 1px solid #363636; /* Adiciona uma nova borda na parte superior com a cor desejada */
+}

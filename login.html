@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=devide-width" , initial-scale="1.0">
+  <meta name="viewport" content="width=device-width" , initial-scale=1.0>
 
   <title>Login</title>
 
@@ -22,7 +22,7 @@
   <!-- nav bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="home.html"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
+      <a class="navbar-brand" href="/home"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -33,15 +33,12 @@
               Entrar
             </a>
             <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown" data-bs-popper="none">
-              <a class="dropdown-item" href="login.html">Login</a>
-              <a class="dropdown-item" href="register.html">Registro</a>
+              <a class="dropdown-item" href="/login">Login</a>
+              <a class="dropdown-item" href="/register">Registro</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sobre.html">Sobre</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Serviços</a>
+            <a class="nav-link" href="/sobre">Sobre</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
@@ -57,14 +54,16 @@
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <h5 class="card-title text-center mb-5 fw-light fs-5">Entrar</h5>
-              <form>
+              <form action="/login" method="POST">
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                   <label for="floatingInput">Endereço de e-mail</label>
+                  <span id="emailError" class="error"></span>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                   <label for="floatingPassword">Senha</label>
+                  <span id="passwordError" class="error"></span>
                 </div>
 
                 <div class="form-check mb-3">
@@ -78,7 +77,7 @@
                   <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Entrar</button>
 
                 </div>
-                <a class="d-block text-center mt-2 small" href="register.html">Ainda não tem uma conta? Registre-se</a>
+                <a class="d-block text-center mt-2 small" href="/register">Ainda não tem uma conta? Registre-se</a>
                 <hr class="my-4">
                 <div class="d-grid mb-2">
                   <button class=" btn btn-google btn-login text-uppercase fw-bold" type="submit">
@@ -91,6 +90,31 @@
                   </button>
                 </div>
               </form>
+              <script>
+                document.querySelector('form').addEventListener('submit', function (event) {
+                  var emailInput = document.querySelector('#floatingInput');
+                  var passwordInput = document.querySelector('#floatingPassword');
+                  var emailError = document.querySelector('#emailError');
+                  var passwordError = document.querySelector('#passwordError');
+              
+                  // Verificar se o campo de e-mail está vazio ou não está no formato correto
+                  if (emailInput.value === '' || !emailInput.validity.valid) {
+                    emailError.textContent = 'Por favor, insira um endereço de e-mail válido.';
+                    event.preventDefault(); // Impede o envio do formulário
+                  } else {
+                    emailError.textContent = ''; // Limpa a mensagem de erro
+                  }
+              
+                  // Verificar se o campo de senha está vazio
+                  if (passwordInput.value === '') {
+                    passwordError.textContent = 'Por favor, insira sua senha.';
+                    event.preventDefault(); // Impede o envio do formulário
+                  } else {
+                    passwordError.textContent = ''; // Limpa a mensagem de erro
+                  }
+                });
+              </script>
+              
             </div>
           </div>
         </div>

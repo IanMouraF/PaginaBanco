@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width", initial-scale=1.0>
   
   <title>Sobre</title>
 
@@ -11,35 +11,123 @@
   
   <link rel="stylesheet" href="style4.css">
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        const response = await fetch('/getUserInfo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Primeiro response ok');
+
+          const userInfo = await response.json();
+          const usernameT = userInfo.username
+          const formattedUsername = usernameT.charAt(0).toUpperCase() + usernameT.slice(1).toLowerCase();
+          document.getElementById('LoginLink').textContent = formattedUsername;
+          document.getElementById('login').textContent = 'Administração'
+          document.getElementById('login').addEventListener('click', function () {
+            // Redirecionar para a página "Administração.html"
+            window.location.href = '/gestao';
+          });
+          document.getElementById('registro').textContent = 'Sair'
+          document.getElementById('registro').addEventListener('click', async function (event) {
+            console.log('Evento de clique acionado');
+            // Remover o token do documento do usuário no MongoDB
+            const response = await fetch('/logout', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                token
+              }),
+            });
+
+            if (response.ok) {
+              console.log('Segundo response ok');
+
+              // Redirecionar para a página de login (ou outra página desejada)
+
+              // Remover as informações de usuário do armazenamento local
+              localStorage.removeItem('token');
+              event.preventDefault();
+              document.getElementById('LoginLink').textContent = 'Entrar';
+              document.getElementById('login').textContent = 'Login';
+              document.getElementById('registro').textContent = 'Registro';
+
+              window.location.href = '/home';
+            } else {
+              console.error('Erro ao efetuar logout:', response.status);
+            }
+          });
+
+          // Verificar novamente se as informações de usuário ainda estão presentes antes de atualizar a página
+          window.addEventListener('beforeunload', function () {
+            const token = localStorage.getItem('token');
+            if (!token) {
+              document.getElementById('LoginLink').textContent = 'Entrar';
+              document.getElementById('login').textContent = 'Login';
+              document.getElementById('registro').href = '/gestao'
+              document.getElementById('registro').textContent = 'Registro';
+              document.getElementById('registro').href = '/home'
+            }
+          });
+
+        } else {
+          console.error('Erro ao obter informações do usuário:', response.status);
+        }
+      } catch (error) {
+        console.error('Erro ao obter informações do usuário:', error);
+      }
+    } else {
+      document.getElementById('login').href = '/login'
+      document.getElementById('registro').href = '/register'
+    }
+  });
+</script>
+
 <body>
 <!-- Header -->
   <!-- Barra de Navegação -->
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="home.html"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/home"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Entrar
+            <a id="LoginLink" class="nav-link dropdown-toggle login-link" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Entrar <span id="username-placeholder"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown" data-bs-popper="none">
-              <a class="dropdown-item" href="login.html">Login</a>
-              <a class="dropdown-item" href="register.html">Registro</a>
+
+            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown"
+              data-bs-popper="none">
+              <a id="login" class="dropdown-item" href="#">Login</a>
+              <a id="registro" class="dropdown-item" href="#">Registro</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sobre.html">Sobre</a>
+            <a class="nav-link" href="/sobre">Sobre</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Serviços</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
+            <a class="nav-link"
+              href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
           </li>
         </ul>
       </div>
