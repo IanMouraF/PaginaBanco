@@ -9,7 +9,9 @@ const {
 const jwt = require('jsonwebtoken');
 const url = 'mongodb+srv://ianAtlas:fabiola356@cluster0.risdfp2.mongodb.net/';
 const dbName = 'cluster0';
-const { LocalStorage } = require('node-localstorage');
+const {
+  LocalStorage
+} = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 
 
@@ -271,7 +273,9 @@ app.get('/users/:id', checkDatabaseConnection, async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const user = await usersCollection.findOne({ _id: ObjectId(userId) });
+    const user = await usersCollection.findOne({
+      _id: ObjectId(userId)
+    });
 
     if (user) {
       console.log('Usuário encontrado:', user);
@@ -330,7 +334,9 @@ app.delete('/users/:id', checkDatabaseConnection, async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const result = await usersCollection.deleteOne({ _id: ObjectId(userId) });
+    const result = await usersCollection.deleteOne({
+      _id: ObjectId(userId)
+    });
 
     if (result.deletedCount > 0) {
       console.log('Usuário excluído com sucesso');
@@ -347,13 +353,28 @@ app.delete('/users/:id', checkDatabaseConnection, async (req, res) => {
 
 app.put('/users/:id', checkDatabaseConnection, async (req, res) => {
   const userId = req.params.id;
-  const { username, email, password } = req.body;
+  const {
+    username,
+    email,
+    password
+  } = req.body;
+
+  if (!ObjectId.isValid(userId)) {
+    console.error('Invalid userId:', userId);
+    res.status(400).send('Invalid userId');
+    return;
+  }
 
   try {
-    const result = await usersCollection.updateOne(
-      { _id: ObjectId(userId) },
-      { $set: { username, email, password } }
-    );
+    const result = await usersCollection.updateOne({
+      _id: ObjectId(userId)
+    }, {
+      $set: {
+        username,
+        email,
+        password
+      }
+    });
 
     if (result.modifiedCount > 0) {
       console.log('Usuário atualizado com sucesso');
@@ -368,36 +389,3 @@ app.put('/users/:id', checkDatabaseConnection, async (req, res) => {
   }
 });
 
-function showEditUserModal(userId) {
-  if (typeof userId !== 'string' || !/^[0-9a-fA-F]{24}$/.test(userId)) {
-    console.error('Invalid userId:', userId);
-    alert('Invalid userId');
-    return;
-  }
-
-  const modal = document.getElementById('editUserModal');
-  const form = document.getElementById('editUserForm');
-
-  // Reset the form
-  form.reset();
-
-  // Set the form action URL
-  form.action = `/users/${userId}`;
-
-  // Get the user information
-  fetch(`/users/${userId}`)
-    .then(response => response.json())
-    .then(user => {
-      // Set the input values with the user information
-      form.username.value = user.username;
-      form.email.value = user.email;
-      form.password.value = user.password;
-
-      // Show the modal
-      modal.style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error fetching user information:', error);
-      alert('Error fetching user information');
-    });
-}

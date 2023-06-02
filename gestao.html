@@ -102,10 +102,15 @@
   });
 </script>
 
-<!-- ... código/* anterior ... -->
+
 
 <script>
-  // ...
+  // Função para fechar o modal de edição de usuário
+  function closeEditUserModal() {
+    const modal = document.getElementById('editUserModal');
+    modal.style.display = 'none';
+    modal.classList.remove('show');
+  }
 
   // Função para excluir um usuário
   async function deleteUser(userId) {
@@ -132,6 +137,59 @@
       }
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
+    }
+  }
+
+  // Função para editar um usuário
+  async function editUser(userId) {
+
+    const usernameInput = document.getElementById('usernameInput').value;
+    const emailInput = document.getElementById('emailInput').value;
+    const passwordInput = document.getElementById('passwordInput').value;
+
+    // Verificar se algum dos campos está vazio
+    if (usernameInput.trim() === '' || emailInput.trim() === '' || passwordInput.trim() === '') {
+      console.error('Por favor, preencha todos os campos');
+      alert("Por favor, preencha todos os campos");
+      return;
+    }
+    // Verificar se o formato do e-mail é válido
+    /* const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput)) {
+      console.error('Por favor, insira um endereço de e-mail válido');
+      alert('Por favor, insira um endereço de e-mail válido');
+      return;
+    } */
+
+    {
+      console.error('Nenhum dado foi alterado');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+
+          username: usernameInput,
+          email: emailInput,
+          password: passwordInput,
+        }),
+      });
+
+      if (response.ok) {
+
+        console.log('Usuário editado com sucesso');
+        // Recarregue a página ou atualize a tabela de usuários para refletir as alterações
+        window.location.reload();
+      } else {
+        console.error('Erro ao editar usuário:', response.status);
+      }
+    } catch (error) {
+      console.error('Erro ao editar usuário:', error);
     }
   }
 
@@ -163,8 +221,20 @@
           idCell.textContent = index + 1;
           nameCell.textContent = user.username;
           emailCell.textContent = user.email;
-          actionCell.innerHTML =
-            `<button id="edit-button" onclick="showEditUserModal('USER_ID')">editar</button><button onclick="deleteUser('${user._id}')">excluir</button>`;
+
+          const editButton = document.createElement('button');
+          editButton.textContent = 'editar';
+          editButton.addEventListener('click', () => {
+            console.log(user._id); // Verificar o valor do user._id no console
+            showEditUserModal(user._id);
+          });
+
+          actionCell.appendChild(editButton);
+
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'excluir';
+          deleteButton.addEventListener('click', () => deleteUser(user._id));
+          actionCell.appendChild(deleteButton);
         });
       } else {
         console.error('Erro ao obter usuários:', response.status);
@@ -172,73 +242,55 @@
     } catch (error) {
       console.error('Erro ao obter usuários:', error);
     }
-  });
 
-  //onclick="editUser('${user._id}')"
-
-  // Função para editar um usuário
-  async function editUser(userId) {
-    const usernameInput = document.getElementById('usernameInput').value;
-    const emailInput = document.getElementById('emailInput').value;
-
-    try {
-      const response = await fetch(`/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-
-          username: usernameInput,
-          email: emailInput,
-        }),
-      });
-
-      if (response.ok) {
-
-        console.log('Usuário editado com sucesso');
-        // Recarregue a página ou atualize a tabela de usuários para refletir as alterações
-        // window.location.reload();
-      } else {
-        console.error('Erro ao editar usuário:', response.status);
+    function showEditUserModal(userId) {
+      if (typeof userId !== 'string' || !/^[0-9a-fA-F]{24}$/.test(userId)) {
+        console.error('Invalid userId:', userId);
+        alert('Invalid userId');
+        return;
       }
-    } catch (error) {
-      console.error('Erro ao editar usuário:', error);
+
+      const modal = document.getElementById('editUserModal');
+      const form = document.getElementById('editUserForm');
+      document.getElementById('saveChangesBtn').addEventListener('click', () => editUser(userId));
+
+      const closeButton = document.querySelector('#editUserModal .btn-close');
+      closeButton.addEventListener('click', closeEditUserModal);
+
+      const cancelButton = document.querySelector('#editUserModal .modal-footer .btn-secondary');
+      cancelButton.addEventListener('click', closeEditUserModal);
+
+
+      // Set the form action URL
+      form.action = `/users/${userId}`;
+
+      // Set the data-userid attribute of the form
+      form.setAttribute('data-userid', userId);
+
+      const dataUserId = form.getAttribute('data-userid');
+
+      // Reset the form
+      form.reset();
+
+      // Get the user information
+      fetch(`/users/${dataUserId}`)
+        .then(response => response.json())
+        .then(user => {
+          // Set the input values with the user information
+
+
+          // Show the modal
+          modal.style.display = 'block';
+          modal.classList.add('show')
+        })
+        .catch(error => {
+          console.error('Error fetching user information:', error);
+          alert('Error fetching user information');
+        });
     }
-  }
-
-  function showEditUserModal(userId) {
-    const modal = document.getElementById('editUserModal');
-    const form = document.getElementById('editUserForm');
-
-    // Reset the form
-    form.reset();
-
-    // Set the form action URL
-    form.action = `/users/${userId}`;
-
-    // Get the user information
-    fetch(`/users/${userId}`)
-      .then(response => response.json())
-      .then(user => {
-        console.log('User:', user);
-        // Set the input values with the user information
-        form.username.value = user.username;
-        form.email.value = user.email;
-        form.password.value = user.password;
-
-        // Show the modal
-        modal.style.display = 'block';
-      })
-      .catch(error => {
-        console.error('Error fetching user information:', error);
-        alert('Error fetching user information');
-      });
-  }
+  });
 </script>
-
-<!-- ... código HTML posterior ... -->
-
+<!-- código para o modal -->
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -286,11 +338,15 @@
           <form id="editUserForm">
             <div class="mb-3">
               <label for="usernameInput" class="form-label">Nome de Usuário:</label>
-              <input type="text" class="form-control" id="usernameInput" placeholder="Nome de Usuário">
+              <input type="text" class="form-control" id="usernameInput" placeholder="Nome de Usuário" required>
             </div>
             <div class="mb-3">
               <label for="emailInput" class="form-label">Email:</label>
-              <input type="email" class="form-control" id="emailInput" placeholder="Email">
+              <input type="email" class="form-control" id="emailInput" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+              <label for="passwordInput" class="form-label">Senha:</label>
+              <input type="password" class="form-control" id="passwordInput" placeholder="Senha" required>
             </div>
           </form>
         </div>
@@ -302,6 +358,7 @@
     </div>
   </div>
   <!-- Modal -->
+
 
   <div class="table-div">
     <h3>Tabela de Usuários</h3>
