@@ -20,6 +20,20 @@
   <script src = "app.js"></script>
   
   <link rel="stylesheet" href="style2.css">
+
+  <script>
+    function confereSenha(){
+      const senha1 = document.querySelector('input[name=password]')
+      const senha1confirma = document.querySelector('input[name=passwordConfirm]')
+
+      if (senha1confirma.value === senha1.value) {
+        senha1confirma.setCustomValidity('');
+      }else{
+        senha1confirma.setCustomValidity('As senhas não conferem');
+      }
+    }
+
+  </script>
 </head>
 
 
@@ -70,13 +84,13 @@
 
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInputUsername" name="username"
-                  placeholder="myusername" autofocus>
+                  placeholder="myusername" autofocus required>
                 <label for="floatingInputUsername">Nome de Usuário</label>
               </div>
 
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInputEmail" name="email"
-                  placeholder="name@example.com">
+                  placeholder="name@example.com" required>
                 <label for="floatingInputEmail">Endereço de e-mail</label>
               </div>
 
@@ -84,12 +98,13 @@
 
               <div class="form-floating m b-3">
                 <input type="password" class="form-control" id="floatingPassword" name="password"
-                  placeholder="Password">
+                  placeholder="Password" required onchange="confereSenha();">
                 <label for="floatingPassword">Senha</label>
               </div>
 
               <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPasswordConfirm" name="passwordConfirm" placeholder="Confirm Password">
+                <input type="password" class="form-control" id="floatingPasswordConfirm" name="passwordConfirm" 
+                placeholder="Confirm Password" required onchange="confereSenha();">
                 <label for="floatingPasswordConfirm">Confirmar Senha</label>
               </div>
 

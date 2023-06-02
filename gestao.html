@@ -13,6 +13,8 @@
 </head>
 
 <script>
+  let userInfo;
+  let usernameT;
   document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
@@ -31,8 +33,10 @@
         if (response.ok) {
           console.log('Primeiro response ok');
 
-          const userInfo = await response.json();
-          const usernameT = userInfo.username
+          userInfo = await response.json();
+          console.log(userInfo); // Verifique a estrutura do objeto userInfo no console
+          window.userInfo = userInfo
+          usernameT = userInfo.username
           const formattedUsername = usernameT.charAt(0).toUpperCase() + usernameT.slice(1).toLowerCase();
           document.getElementById('LoginLink').textContent = formattedUsername;
           document.getElementById('login').textContent = 'Administração'
@@ -61,7 +65,6 @@
 
               // Remover as informações de usuário do armazenamento local
               localStorage.removeItem('token');
-              event.preventDefault();
               document.getElementById('LoginLink').textContent = 'Entrar';
               document.getElementById('login').textContent = 'Login';
               document.getElementById('registro').textContent = 'Registro';
@@ -91,8 +94,10 @@
         console.error('Erro ao obter informações do usuário:', error);
       }
     } else {
+      alert('Você precisa estar conectado para acessar essa página')
       document.getElementById('login').href = '/login'
       document.getElementById('registro').href = '/register'
+      window.location.href = '/home'
     }
   });
 </script>
@@ -113,9 +118,15 @@
       });
 
       if (response.ok) {
+        if (window.userInfo.userId == userId) {
+          localStorage.removeItem('token');
+          window.location.href = '/home'
+        } else {
+          window.location.reload();
+        }
         console.log('Usuário excluído com sucesso');
         // Recarregue a página para atualizar a tabela de usuários
-        window.location.reload();
+
       } else {
         console.error('Erro ao excluir usuário:', response.status);
       }

@@ -16,6 +16,7 @@
     "jsonwebtoken": "^9.0.0",
     "localStorage": "^1.0.4",
     "mongodb": "^4.16.0",
-    "node-localstorage": "^2.2.1"
+    "node-localstorage": "^2.2.1",
+    "unfetch": "^5.0.0"
   }
 }

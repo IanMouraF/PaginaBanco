@@ -12,6 +12,8 @@ const dbName = 'cluster0';
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 
+
+
 let usersCollection;
 
 // Função para conectar ao MongoDB
@@ -75,6 +77,10 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 app.get('/home', async function (req, res) {
+  res.sendFile(path.join(__dirname, 'home.html'));
+});
+
+app.get('/', async function (req, res) {
   res.sendFile(path.join(__dirname, 'home.html'));
 });
 
@@ -198,7 +204,9 @@ app.post('/getUserInfo', checkDatabaseConnection, async (req, res) => {
     if (user) {
       console.log('Usuário autenticado:', user);
       res.json({
+        userId: user._id,
         username: user.username
+
       });
     } else {
       console.log('Usuário não encontrado');
