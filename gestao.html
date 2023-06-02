@@ -88,9 +88,13 @@
           });
 
         } else {
+          localStorage.removeItem('token')
+          window.location.reload();
           console.error('Erro ao obter informações do usuário:', response.status);
         }
       } catch (error) {
+        localStorage.removeItem('token')
+        window.location.reload();
         console.error('Erro ao obter informações do usuário:', error);
       }
     } else {
@@ -161,10 +165,7 @@
       return;
     } */
 
-    {
-      console.error('Nenhum dado foi alterado');
-      return;
-    }
+
 
     try {
       const response = await fetch(`/users/${userId}`, {

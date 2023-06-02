@@ -84,12 +84,17 @@
           });
 
         } else {
+          localStorage.removeItem('token')
+          window.location.reload();
           console.error('Erro ao obter informações do usuário:', response.status);
         }
       } catch (error) {
+        localStorage.removeItem('token')
+        window.location.reload();
         console.error('Erro ao obter informações do usuário:', error);
       }
     } else {
+      localStorage.removeItem('token')
       document.getElementById('login').href = '/login'
       document.getElementById('registro').href = '/register'
     }
