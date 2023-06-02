@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const app = express();
 const port = 3000;
 const path = require('path');
@@ -7,12 +8,15 @@ const {
   ObjectId
 } = require('mongodb');
 const jwt = require('jsonwebtoken');
-const url = 'mongodb+srv://ianAtlas:fabiola356@cluster0.risdfp2.mongodb.net/';
+const url = process.env.MONGO_URL
+const jwtsecret = process.env.JWT_SECRET
 const dbName = 'cluster0';
 const {
   LocalStorage
 } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
+
+
 
 
 
@@ -110,7 +114,7 @@ function generateToken(user) {
   };
 
   // Gera o token com uma chave secreta e um tempo de expiração (opcional)
-  const token = jwt.sign(payload, '1237689', {
+  const token = jwt.sign(payload, jwtsecret, {
     expiresIn: '1h'
   });
 
@@ -125,7 +129,7 @@ function authenticateToken(req, res, next) {
     return res.status(401).send('Token de autenticação não fornecido.');
   }
 
-  jwt.verify(token, '1237689', (err, user) => {
+  jwt.verify(token, jwtsecret, (err, user) => {
     if (err) {
       return res.status(403).send('Token de autenticação inválido.');
     }
@@ -197,7 +201,7 @@ app.post('/getUserInfo', checkDatabaseConnection, async (req, res) => {
   } = req.body;
 
   try {
-    const decoded = jwt.verify(token, '1237689');
+    const decoded = jwt.verify(token, jwtsecret);
 
     const user = await usersCollection.findOne({
       _id: ObjectId(decoded.userId)
@@ -248,7 +252,7 @@ app.post('/logout', checkDatabaseConnection, async (req, res) => {
   } = req.body;
 
   try {
-    const decoded = jwt.verify(token, '1237689');
+    const decoded = jwt.verify(token, jwtsecret);
 
     // Atualize o documento do usuário no MongoDB removendo o token
     await usersCollection.updateOne({
