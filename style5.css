@@ -112,3 +112,13 @@ a {
   border: none; /* Remove a borda padrão */
   border-top: 1px solid #363636; /* Adiciona uma nova borda na parte superior com a cor desejada */
 }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
