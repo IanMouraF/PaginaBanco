@@ -99,6 +99,83 @@
       document.getElementById('registro').href = '/register'
     }
   });
+
+  /* modo dark */
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const body = document.body;
+    const tema = localStorage.getItem('tema')
+
+
+    const sun = "https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg";
+    const moon = "https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg"
+
+
+    var theme = "light";
+    const root = document.querySelector(":root");
+    const container = document.getElementsByClassName("theme-container")[0];
+    const themeIcon = document.getElementById("theme-icon");
+    container.addEventListener("click", handleClick);
+
+
+    let canClick = true;
+
+    function handleClick() {
+      if (canClick) {
+        switch (theme) {
+        case "light":
+          setDark();
+          theme = "dark";
+          break;
+        case "dark":
+          setLight();
+          theme = "light";
+          break;
+      }
+        canClick = false;
+        setTimeout(() => {
+          canClick = true;
+        }, 800);
+      }
+    }
+
+
+    function setLight() {
+      localStorage.setItem('tema', 'light')
+      body.classList.remove('dark-mode')
+
+      container.classList.remove("shadow-dark");
+      setTimeout(() => {
+        container.classList.add("shadow-light");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = sun;
+    }
+
+    function setDark() {
+      localStorage.setItem('tema', 'dark')
+      body.classList.toggle('dark-mode')
+      container.classList.remove("shadow-light");
+      setTimeout(() => {
+        container.classList.add("shadow-dark");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = moon;
+    }
+
+    if (tema === "light") {
+    setLight();
+    theme = "light"
+  } else if (tema === "dark") {
+    setDark();
+    theme = "dark"
+  }
+
+
+  });
+  /* modo dark */
 </script>
 
 <body class="d-flex flex-column min-vh-100">
@@ -171,12 +248,16 @@
         </div>
       </div>
     </div>
-    <h1 class="text2 fw-light text-black text-center">Conheça a Equipe!</h1>
-    <footer class="bg-primary text-center py-5 footer">
+    <h1 class="text2 fw-light text-center">Conheça a Equipe!</h1>
+<!--     <footer class=" text-center py-5 footer">
       <div class="container">
 
       </div>
-    </footer>
+
+    </footer> -->
+    <div class="theme-container shadow-light">
+      <img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg" alt="ERR">
+    </div>
   </div>
 </div>
 </body>

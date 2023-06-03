@@ -16,6 +16,84 @@
   <script src="https://kit.fontawesome.com/a1e181d071.js" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="style2.css">
+  <script>
+  /* modo dark */
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const body = document.body;
+    const tema = localStorage.getItem('tema')
+
+
+    const sun = "https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg";
+    const moon = "https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg"
+
+
+    var theme = "light";
+    const root = document.querySelector(":root");
+    const container = document.getElementsByClassName("theme-container")[0];
+    const themeIcon = document.getElementById("theme-icon");
+    container.addEventListener("click", handleClick);
+
+
+    let canClick = true;
+
+    function handleClick() {
+      if (canClick) {
+        switch (theme) {
+        case "light":
+          setDark();
+          theme = "dark";
+          break;
+        case "dark":
+          setLight();
+          theme = "light";
+          break;
+      }
+        canClick = false;
+        setTimeout(() => {
+          canClick = true;
+        }, 800);
+      }
+    }
+
+
+    function setLight() {
+      localStorage.setItem('tema', 'light')
+      body.classList.remove('dark-mode')
+
+      container.classList.remove("shadow-dark");
+      setTimeout(() => {
+        container.classList.add("shadow-light");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = sun;
+    }
+
+    function setDark() {
+      localStorage.setItem('tema', 'dark')
+      body.classList.toggle('dark-mode')
+      container.classList.remove("shadow-light");
+      setTimeout(() => {
+        container.classList.add("shadow-dark");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = moon;
+    }
+
+    if (tema === "light") {
+    setLight();
+    theme = "light"
+  } else if (tema === "dark") {
+    setDark();
+    theme = "dark"
+  }
+
+
+  });
+  /* modo dark */
+  </script>
 </head>
 
 <body>
@@ -23,16 +101,19 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/home"><img class="custom-logo" src="imagens/pngwing.com.png">BrasilBank</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
               Entrar
             </a>
-            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown" data-bs-popper="none">
+            <div class="dropdown-menu dropdown-menu-end animate slideIn" aria-labelledby="navbarDropdown"
+              data-bs-popper="none">
               <a class="dropdown-item" href="/login">Login</a>
               <a class="dropdown-item" href="/register">Registro</a>
             </div>
@@ -41,83 +122,91 @@
             <a class="nav-link" href="/sobre">Sobre</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
+            <a class="nav-link"
+              href="https://wa.me/5585996815286?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20BRASILBANK.">Contato</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <!-- nav bar -->
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card border-0 shadow rounded-3 my-5">
-            <div class="card-body p-4 p-sm-5">
-              <h5 class="card-title text-center mb-5 fw-light fs-5">Entrar</h5>
-              <form action="/login" method="POST">
-                <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
-                  <label for="floatingInput">Endereço de e-mail</label>
-                  <span id="emailError" class="error"></span>
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
-                  <label for="floatingPassword">Senha</label>
-                  <span id="passwordError" class="error"></span>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Entrar</h5>
+            <form action="/login" method="POST">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email"
+                  required>
+                <label for="floatingInput">Endereço de e-mail</label>
+                <span id="emailError" class="error"></span>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
+                  required>
+                <label for="floatingPassword">Senha</label>
+                <span id="passwordError" class="error"></span>
+              </div>
 
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                  <label class="form-check-label" for="rememberPasswordCheck">
-                    Salvar senha
-                  </label>
-                </div>
-                <div class="d-grid">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                <label class="form-check-label" for="rememberPasswordCheck">
+                  Salvar senha
+                </label>
+              </div>
+              <div class="d-grid">
 
-                  <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Entrar</button>
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Entrar</button>
 
-                </div>
-                <a class="d-block text-center mt-2 small" href="/register">Ainda não tem uma conta? Registre-se</a>
-                <hr class="my-4">
-                <div class="d-grid mb-2">
-                  <button class=" btn btn-google btn-login text-uppercase fw-bold" type="submit">
-                    <i class="fab fa-google me-2"></i> Entrar com o Google
-                  </button>
-                </div>
-                <div class="d-grid">
-                  <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
-                    <i class="fab fa-facebook-f me-2"></i> Entrar com o Facebook
-                  </button>
-                </div>
-              </form>
-              <script>
-                document.querySelector('form').addEventListener('submit', function (event) {
-                  var emailInput = document.querySelector('#floatingInput');
-                  var passwordInput = document.querySelector('#floatingPassword');
-                  var emailError = document.querySelector('#emailError');
-                  var passwordError = document.querySelector('#passwordError');
-              
-                  // Verificar se o campo de e-mail está vazio ou não está no formato correto
-                  if (emailInput.value === '' || !emailInput.validity.valid) {
-                    emailError.textContent = 'Por favor, insira um endereço de e-mail válido.';
-                    event.preventDefault(); // Impede o envio do formulário
-                  } else {
-                    emailError.textContent = ''; // Limpa a mensagem de erro
-                  }
-              
-                  // Verificar se o campo de senha está vazio
-                  if (passwordInput.value === '') {
-                    passwordError.textContent = 'Por favor, insira sua senha.';
-                    event.preventDefault(); // Impede o envio do formulário
-                  } else {
-                    passwordError.textContent = ''; // Limpa a mensagem de erro
-                  }
-                });
-              </script>
-              
+              </div>
+              <a class="d-block text-center mt-2 small" href="/register">Ainda não tem uma conta? Registre-se</a>
+              <hr class="my-4">
+              <h7 class="d-block text-center mt-2 small" style="opacity: 0.5;">Botões abaixo meramente ilustrativos</h7>
+              <div class="d-grid mb-2">
+                <button class=" btn btn-google btn-login text-uppercase fw-bold" type="submit">
+                  <i class="fab fa-google me-2"></i> Entrar com o Google
+                </button>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+                  <i class="fab fa-facebook-f me-2"></i> Entrar com o Facebook
+                </button>
+              </div>
+            </form>
+            <div class="theme-container shadow-light">
+              <img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg"
+                alt="ERR">
             </div>
+            <script>
+              document.querySelector('form').addEventListener('submit', function (event) {
+                var emailInput = document.querySelector('#floatingInput');
+                var passwordInput = document.querySelector('#floatingPassword');
+                var emailError = document.querySelector('#emailError');
+                var passwordError = document.querySelector('#passwordError');
+
+                // Verificar se o campo de e-mail está vazio ou não está no formato correto
+                if (emailInput.value === '' || !emailInput.validity.valid) {
+                  emailError.textContent = 'Por favor, insira um endereço de e-mail válido.';
+                  event.preventDefault(); // Impede o envio do formulário
+                } else {
+                  emailError.textContent = ''; // Limpa a mensagem de erro
+                }
+
+                // Verificar se o campo de senha está vazio
+                if (passwordInput.value === '') {
+                  passwordError.textContent = 'Por favor, insira sua senha.';
+                  event.preventDefault(); // Impede o envio do formulário
+                } else {
+                  passwordError.textContent = ''; // Limpa a mensagem de erro
+                }
+              });
+            </script>
+
           </div>
         </div>
       </div>
     </div>
+  </div>
 </body>

@@ -23,11 +23,6 @@ body {
   height: 60px
 }
 
-nav {
-  background: rgb(217,225,226);
-  background: radial-gradient(circle, rgba(217,225,226,1) 0%, rgba(173,160,144,1) 70%, rgba(125,115,90,1) 100%);
-  
-}
 
 body{
   padding-top: 110px
@@ -41,4 +36,299 @@ body{
   background-color: #333;
   color: #fff;
   padding: 20px;
+}
+
+
+
+.card-img-left {
+  width: 45%;
+  /* Link to your background image using in the property below! */
+  background: scroll center url('https://source.unsplash.com/WgUHuGSWPVM/414x512');
+  background-size: cover;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white !important;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white !important;
+  background-color: #3b5998;
+}
+
+html {
+  font-size: 18px;
+}
+h1 {
+  font-size: 2.5rem;
+}
+.lead {
+  font-size: 1.0rem;
+}
+a {
+  font-size: 1.1rem;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.custom-logo{
+  height: 60px
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.carousel-item {
+  height: 70vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bg-primary{
+  background: rgb(217,225,226);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.658) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);
+}
+body {
+  --bs-dark: var(--bs-dark-gradient);
+  background-image: radial-gradient(circle, rgb(255, 255, 255) 12%, rgba(173, 160, 144, 1) 72%, rgba(125, 115, 90, 1) 96%);
+  transition: background-image 0.5s;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 80px;
+} 
+body.dark-mode{
+  background-image: radial-gradient(circle, rgba(16, 27, 37, 0.97) 0%, rgba(38,40,43,1) 100%)
+}
+nav {
+  background-image: radial-gradient(circle, rgba(253, 248, 241, 0.808) 2%, rgba(173, 160, 144, 1) 72%, rgba(125, 115, 90, 1) 96%);
+  
+}
+
+body.dark-mode .navbar {
+  background-image: radial-gradient(circle, rgba(14, 25, 37, 0.97) 0%, rgba(38,40,43,1) 100%)
+}
+
+body.dark-mode .footer {
+  background-image: radial-gradient(circle, rgba(22, 31, 41, 0.97) 0%, rgba(38,40,43,1) 100%)
+}
+
+.custom-logo{
+  height: 60px
+}
+
+.imagem1{
+  height: 180px;
+  float: left;
+  margin-right: 20px;
+  
+}
+.imagem2{
+  height: 180px;
+  float: right;
+  margin-left: 20px;
+  
+}
+
+.nav-link ul{
+  display: none;
+}
+
+.nav-link ul:hover{
+  display: block;
+}
+
+/* DropDown */
+@media (min-width: 768px) {
+  .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+/* DropDown */
+
+
+
+html {
+  font-size: 18px;
+}
+h1 {
+  font-size: 2.5rem;
+}
+.lead {
+  font-size: 1.0rem;
+}
+a {
+  font-size: 1.1rem;
+}
+body p,
+body h1 {
+  color: rgb(0, 0, 0); /* Cor do texto em modo claro*/
+}
+body.dark-mode p,
+body.dark-mode h1 {
+  color: rgb(179, 179, 179); /* Cor do texto em modo escuro */
+}
+
+body .navbar a {
+  color: rgb(0, 0, 0); /* Cor do texto em modo claro*/
+}
+body.dark-mode .navbar a {
+  color: rgb(179, 179, 179); /* Cor do texto em modo escuro */
+}
+
+body.dark-mode .carrosseltext {
+  color: #ffffff;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.custom-hr {
+  margin: 20px auto; /* Define uma margem superior e inferior de 20px e centraliza horizontalmente a linha */
+  width: 80%; /* Define a largura da linha */
+  border: none; /* Remove a borda padrão */
+  border-top: 1px solid #363636; /* Adiciona uma nova borda na parte superior com a cor desejada */
+}
+
+.footer {
+  z-index: 2;
+  width: 100%;
+  padding: 20px;
+  position: sticky;
+  background: rgba(125,115,90,1);
+
+}
+
+.container {
+  flex: 1;
+}
+
+:root {
+  --bs-dark-gradient: radial-gradient(circle, rgb(255, 255, 255) 12%, rgba(173, 160, 144, 1) 72%, rgba(125, 115, 90, 1) 96%);
+}
+
+
+.theme-container {
+  z-index: 99;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.theme-container:hover {
+  z-index: 99;
+  opacity: 0.8;
+}
+
+.shadow-dark {
+  z-index: 99;
+  background: linear-gradient(145deg, #20262c, #1c2633);
+  box-shadow: 17px 17px 23px #181f25,
+    -17px -17px 23px #1f2933, inset 5px 5px 4px #1f2933,
+    inset -5px -5px 4px #1c242c;
+}
+
+.shadow-light {
+  z-index: 99;
+  box-shadow: 7px 7px 15px -10px #bbcfda, -4px -4px 13px #ffffff,
+    inset 7px 7px 3px rgba(209, 217, 230, 0.35),
+    inset -11px -11px 3px rgba(255, 255, 255, 0.3)
+}
+
+@keyframes change {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.4);
+  }
+}
+
+.change {
+  animation-name: change;
+  animation-duration: 1s;
+  animation-direction: alternate;
+}
+
+.carrosseltext {
+  color: #ffffff;
 }

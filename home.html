@@ -12,7 +12,7 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+  </script>
 
   <link rel="stylesheet" href="Style.css">
 </head>
@@ -20,6 +20,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
+    
 
     if (token) {
       try {
@@ -99,6 +100,83 @@
       document.getElementById('registro').href = '/register'
     }
   });
+
+  /* modo dark */
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const body = document.body;
+    const tema = localStorage.getItem('tema')
+
+
+    const sun = "https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg";
+    const moon = "https://www.uplooder.net/img/image/2/addf703a24a12d030968858e0879b11e/moon.svg"
+
+
+    var theme = "light";
+    const root = document.querySelector(":root");
+    const container = document.getElementsByClassName("theme-container")[0];
+    const themeIcon = document.getElementById("theme-icon");
+    container.addEventListener("click", handleClick);
+
+
+    let canClick = true;
+
+    function handleClick() {
+      if (canClick) {
+        switch (theme) {
+        case "light":
+          setDark();
+          theme = "dark";
+          break;
+        case "dark":
+          setLight();
+          theme = "light";
+          break;
+      }
+        canClick = false;
+        setTimeout(() => {
+          canClick = true;
+        }, 800);
+      }
+    }
+
+
+    function setLight() {
+      localStorage.setItem('tema', 'light')
+      body.classList.remove('dark-mode')
+
+      container.classList.remove("shadow-dark");
+      setTimeout(() => {
+        container.classList.add("shadow-light");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = sun;
+    }
+
+    function setDark() {
+      localStorage.setItem('tema', 'dark')
+      body.classList.toggle('dark-mode')
+      container.classList.remove("shadow-light");
+      setTimeout(() => {
+        container.classList.add("shadow-dark");
+        themeIcon.classList.remove("change");
+      }, 300);
+      themeIcon.classList.add("change");
+      themeIcon.src = moon;
+    }
+
+    if (tema === "light") {
+    setLight();
+    theme = "light"
+  } else if (tema === "dark") {
+    setDark();
+    theme = "dark"
+  }
+
+
+  });
+  /* modo dark */
 </script>
 
 <!-- Barra de Navegação -->
@@ -169,19 +247,19 @@
           style="background-image: url('https://source.unsplash.com/utWyPB8_FU8/1920x1080')">
           <div class="carousel-caption">
             <h4>Tudo digital!</h4>
-            <p style="font-size: 120%;">Diga adeus às maquinas e faça tudo pelo seu celular!</p>
+            <p class="carrosseltext" style="font-size: 120%;">Diga adeus às maquinas e faça tudo pelo seu celular!</p>
           </div>
         </div>
         <div class="carousel-item" style="background-image: url('https://source.unsplash.com/k24rOBJ2D_0/')">
           <div class="carousel-caption">
             <h4>Simples e confiável</h4>
-            <p style="font-size: 120%;">Operações rápidas, simples, confiáveis e criptografadas!</p>
+            <p class="carrosseltext" style="font-size: 120%;">Operações rápidas, simples, confiáveis e criptografadas!</p>
           </div>
         </div>
         <div class="carousel-item" style="background-image: url('https://source.unsplash.com/ztYmIQecyH4/1920x1080')">
           <div class="carousel-caption">
             <h4>Ganhe dinheiro</h4>
-            <p style="font-size: 120%;">Aqui o seu dinheiro parado vai render!.</p>
+            <p class="carrosseltext"style="font-size: 120%;">Aqui o seu dinheiro parado vai render!.</p>
           </div>
         </div>
       </div>
@@ -203,8 +281,8 @@
   <section class="py-5">
     <div class="container">
       <img src="https://www.alll.com/wp-content/uploads/2014/12/Transparent-bubble-min-1024x680.jpg" class="imagem1">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0)">Transparência</h1>
-      <p class="lead" style="color:rgb(0, 0, 0)">No nosso banco você consegue acompanhar em tempo real seu saldo, suas
+      <h1 class="fw-light" >Transparência</h1>
+      <p class="lead" >No nosso banco você consegue acompanhar em tempo real seu saldo, suas
         transações, seu rendimento,
         suas pendências, realizar cobranças e outras funcionalidades.</p>
     </div>
@@ -213,7 +291,7 @@
   <section class="py-5 align-right">
     <div class="container">
       <img src="https://www.icba.org/images/default-source/news/bank-security.jpg?sfvrsn=9e590817_0" class="imagem2">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0);">Segurança</h1>
+      <h1 class="fw-light">Segurança</h1>
       <p class="lead">No Banco BRASILBANK, a segurança dos seus dados é a nossa prioridade.
         Utilizamos tecnologias avançadas de criptografia e medidas de proteção para garantir a confidencialidade e
         integridade das suas informações financeiras. Você pode ter tranquilidade ao realizar transações online,
@@ -224,8 +302,8 @@
   <section class="py-5">
     <div class="container">
       <img src="https://www.foregon.com/media/uploads/2018/11/como-usar-aplicativos-de-bancos.jpg" class="imagem1">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0)">Facilidade de uso</h1>
-      <p class="lead" style="color:rgb(0, 0, 0)">Nosso site foi projetado para proporcionar uma experiência intuitiva e
+      <h1 class="fw-light">Facilidade de uso</h1>
+      <p class="lead">Nosso site foi projetado para proporcionar uma experiência intuitiva e
         fácil de usar.
         Com uma interface amigável e navegabilidade simplificada, você encontrará facilmente as opções e funcionalidades
         desejadas.
@@ -238,8 +316,8 @@
       <img
         src="https://assets-blog.pagseguro.uol.com.br/wp-content/2021/08/maneiras-de-fazer-atendimento-personalizado.jpg"
         class="imagem2">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0)">Atendimento Personalizado</h1>
-      <p class="lead" style="color:rgb(0, 0, 0)">No Banco BRASILBANK, valorizamos o relacionamento com nossos clientes.
+      <h1 class="fw-light">Atendimento Personalizado</h1>
+      <p class="lead">No Banco BRASILBANK, valorizamos o relacionamento com nossos clientes.
         Além das funcionalidades online, oferecemos um atendimento personalizado por meio de chat, e-mail ou telefone.
         Nossa equipe está pronta para responder suas dúvidas, fornecer suporte e auxiliar com suas necessidades
         financeiras.</p>
@@ -251,8 +329,8 @@
       <img
         src="https://www.practicalbusinessskills.com/assets/images/non-card/banking-services-available-for-small-business.jpg"
         class="imagem1">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0)">Ampla Variedade de Serviços</h1>
-      <p class="lead" style="color:rgb(0, 0, 0)">O site do Banco BRASILBANK oferece uma ampla gama de serviços
+      <h1 class="fw-light">Ampla Variedade de Serviços</h1>
+      <p class="lead">O site do Banco BRASILBANK oferece uma ampla gama de serviços
         financeiros para atender
         às suas necessidades. Além do acesso às suas contas, você pode solicitar empréstimos, investir em produtos
         financeiros,
@@ -265,20 +343,23 @@
     <div class="container">
       <img src="https://beneficios.ifood.com.br/blog/wp-content/uploads/2021/09/banco-de-dados-e1632859017120.jpeg"
         class="imagem2">
-      <h1 class="fw-light" style="color:rgb(0, 0, 0)">Atualizações e Recursos Avançados</h1>
-      <p class="lead" style="color:rgb(0, 0, 0)">Estamos sempre atualizando e aprimorando nosso site para oferecer
+      <h1 class="fw-light">Atualizações e Recursos Avançados</h1>
+      <p class="lead">Estamos sempre atualizando e aprimorando nosso site para oferecer
         recursos avançados e
         acompanhar as demandas do mercado financeiro. Fique por dentro das últimas novidades,
         beneficie-se de ferramentas financeiras avançadas e desfrute de um ambiente online moderno e dinâmico para
         gerenciar suas finanças.</p>
     </div>
   </section>
+  <div class="theme-container shadow-light">
+    <img id="theme-icon" src="https://www.uplooder.net/img/image/55/7aa9993fc291bc170abea048589896cf/sun.svg" alt="ERR">
+  </div>
 
-  <footer class="text-center py-5 footer">
+<!--   <footer class="text-center py-5 footer">
     <div class="container">
 
     </div>
-  </footer>
+  </footer> -->
 
   <!-- Page Content -->
 
