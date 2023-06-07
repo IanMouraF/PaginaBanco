@@ -34,16 +34,6 @@ nav {
   display: block;
 }
 
-/* DropDown */
-@media (min-width: 768px) {
-  .animate {
-    animation-duration: 0.3s;
-    -webkit-animation-duration: 0.3s;
-    animation-fill-mode: both;
-    -webkit-animation-fill-mode: both;
-  }
-}
-
 @keyframes slideIn {
   0% {
     transform: translateY(1rem);
@@ -305,12 +295,32 @@ body.dark-mode .footer {
 }
 
 /* DropDown */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .animate {
     animation-duration: 0.3s;
     -webkit-animation-duration: 0.3s;
     animation-fill-mode: both;
     -webkit-animation-fill-mode: both;
+  }
+  .table-div {
+    width: 80%;
+  }
+
+  .table-div > h3 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+
+  .table-div table {
+    font-size: 1.2rem;
+  }
+
+  .botaoeditar {
+    font-size: 1.5rem;
+  }
+  
+  .botaoexcluir {
+    font-size: 1.5rem;
   }
 }
 

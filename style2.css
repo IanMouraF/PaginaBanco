@@ -206,6 +206,59 @@ body.dark-mode .carrosseltext {
   color: #ffffff;
 }
 
+
+.custom-card-login {
+  width: calc(100vh * 480 / 680); /* Mantém a proporção inicial de 480/680 */
+  max-width: 480px; /* Defina a largura máxima desejada */
+  margin: 0 auto;
+  
+}
+
+
+
+.custom-card-login-box {
+  min-width: 420px; /* Defina o tamanho mínimo de largura desejado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 15px;
+  box-sizing: border-box;
+  max-width: 100%; /* Define a largura máxima para ocupar todo o espaço disponível */
+  overflow-x: hidden; /* Oculta o conteúdo que ultrapassar a largura do elemento */
+}
+
+@media (max-width: 576px) {
+  .custom-card-login-box {
+    justify-content: flex-end; /* Alinha à esquerda em telas menores */
+  }
+}
+
+.custom-card-reg {
+  width: calc(100vh * 943 / 778); /* Mantém a proporção inicial de 480/680 */
+  max-width: 973px; /* Defina a largura máxima desejada */
+  margin: 0 auto;
+  
+}
+
+.custom-card-reg-box {
+  min-width: 420px; /* Defina o tamanho mínimo de largura desejado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 15px;
+  box-sizing: border-box;
+  max-width: 100%; /* Define a largura máxima para ocupar todo o espaço disponível */
+  overflow-x: hidden; /* Oculta o conteúdo que ultrapassar a largura do elemento */
+}
+
+@media (max-width: 576px) {
+  .custom-card-login-box {
+    justify-content: flex-end; /* Alinha à esquerda em telas menores */
+  }
+}
+
 .nav-item {
   font-size: 1.2rem;
 }
