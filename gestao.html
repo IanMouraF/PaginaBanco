@@ -271,26 +271,18 @@
       const cancelButton = document.querySelector('#editUserModal .modal-footer .btn-secondary');
       cancelButton.addEventListener('click', closeEditUserModal);
 
-
-      // Set the form action URL
       form.action = `/users/${userId}`;
 
-      // Set the data-userid attribute of the form
       form.setAttribute('data-userid', userId);
 
       const dataUserId = form.getAttribute('data-userid');
 
-      // Reset the form
       form.reset();
 
-      // Get the user information
       fetch(`/users/${dataUserId}`)
         .then(response => response.json())
         .then(user => {
-          // Set the input values with the user information
 
-
-          // Show the modal
           modal.style.display = 'block';
           modal.classList.add('show')
         })

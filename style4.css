@@ -76,17 +76,6 @@ body{
   padding-top: 110px
 }
 
-
-
-
-
-.card-img-left {
-  width: 45%;
-  /* Link to your background image using in the property below! */
-  background: scroll center url('https://source.unsplash.com/WgUHuGSWPVM/414x512');
-  background-size: cover;
-}
-
 .btn-login {
   font-size: 0.9rem;
   letter-spacing: 0.05rem;
@@ -128,15 +117,6 @@ a {
   height: 60px
 }
 
-.carousel-item {
-  height: 70vh;
-  min-height: 350px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 .bg-primary{
   background: rgb(217,225,226);
   background: radial-gradient(circle, rgba(255, 255, 255, 0.658) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);

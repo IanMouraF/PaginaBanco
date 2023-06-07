@@ -2,7 +2,6 @@
 
 .card-img-left {
   width: 45%;
-  /* Link to your background image using in the property below! */
   background: scroll center url('https://source.unsplash.com/WgUHuGSWPVM/414x512');
   background-size: cover;
 }
@@ -58,15 +57,7 @@ a {
   padding: 20px;
 }
 
-.carousel-item {
-  height: 70vh;
-  min-height: 350px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+
 .bg-primary{
   background: rgb(217,225,226);
   background: radial-gradient(circle, rgba(255, 255, 255, 0.658) 12%, rgba(173,160,144,1) 72%, rgba(125,115,90,1) 96%);
@@ -208,8 +199,8 @@ body.dark-mode .carrosseltext {
 
 
 .custom-card-login {
-  width: calc(100vh * 480 / 680); /* Mantém a proporção inicial de 480/680 */
-  max-width: 480px; /* Defina a largura máxima desejada */
+  width: calc(100vh * 480 / 680); 
+  max-width: 480px; 
   margin: 0 auto;
   
 }
@@ -217,7 +208,7 @@ body.dark-mode .carrosseltext {
 
 
 .custom-card-login-box {
-  min-width: 420px; /* Defina o tamanho mínimo de largura desejado */
+  min-width: 420px; 
   display: flex;
   align-items: center;
   justify-content: center;
