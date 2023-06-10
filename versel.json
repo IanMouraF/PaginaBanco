@@ -1,16 +1,15 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/"}],
-  "version" : 2,
-  "builds" : [
+  "version": 2,
+  "builds": [
     {
-      "src" : "src/app.js",
-      "use" : "@vercel/node"
+      "src": "app.js",
+      "use": "@vercel/node"
     }
   ],
-  "routes" : [
+  "routes": [
     {
-      "src": "(.*)",
-      "dest": "src/app.js"
+      "src": "/(.*)",
+      "dest": "/app.js"
     }
   ]
 }
