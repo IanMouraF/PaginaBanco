@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "app.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "installCommand": "npm install && npm audit fix"
+      }
     }
   ],
   "rewrites": [
