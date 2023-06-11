@@ -14,11 +14,7 @@ const dbName = 'cluster0';
 const {
   LocalStorage
 } = require('node-localstorage');
-const localStorage = new LocalStorage('./scratch');
-
-
-
-
+const localStorage = new LocalStorage('/scratch');
 
 let usersCollection;
 
