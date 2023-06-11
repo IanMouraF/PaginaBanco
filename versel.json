@@ -18,6 +18,10 @@
       {
         "src": "/(.*)",
         "dest": "/app.js"
+      },
+      {
+        "src": "/favicon.ico",
+        "status": 204
       }
     ]
   
