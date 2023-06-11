@@ -336,3 +336,7 @@ body.dark-mode .carrosseltext {
 .carrosseltext {
   color: #ffffff;
 }
+
+.checkbox-container {
+  text-align: left;
+}
